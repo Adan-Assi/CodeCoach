@@ -6,7 +6,7 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Ignore environment variables
+# Ignore environment variables (e.g. openai keys)
 .env
 
 # VS Code settings
