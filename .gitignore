@@ -1,17 +1,6 @@
-# Ignore virtual environment
-venv/
-
-# Ignore Python cache files
+.venv/
 __pycache__/
-*.pyc
-*.pyo
-
-# Ignore environment variables (e.g. openai keys)
+.pytest_cache/
 .env
 
-# VS Code settings
-.vscode/
-
-# OS-specific junk
-.DS_Store
-Thumbs.db
+dev_doc.md
