@@ -18,10 +18,11 @@ Goal:
 Provide a clean API that the frontend (Vite app) can call.
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models import AnalyzeRequest, AnalyzeResponse
-from ai_engine import run_analysis
+from ai_engine import run_analysis, LLMUnavailableError, LLMBadOutputError
+
 
 # FastAPI application instance
 app = FastAPI(title="CodeCoach API")
@@ -56,5 +57,9 @@ def analyze(req: AnalyzeRequest) -> AnalyzeResponse:
      Output is validated against AnalyzeResponse.
     """
 
-    result = run_analysis(req.language, req.code)
-    return AnalyzeResponse(**result)
+    try:
+        return run_analysis(code=req.code, language=req.language) # returns AnalyzeResponse
+    except LLMUnavailableError:
+        raise HTTPException(503, "The analysis service is temporarily unavailable. Please try again.")
+    except LLMBadOutputError:
+        raise HTTPException(502, "The analysis service returned an unusable response. Please try again.")

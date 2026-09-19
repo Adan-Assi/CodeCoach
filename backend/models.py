@@ -9,7 +9,7 @@ class AnalyzeRequest(BaseModel):
 
     # Optional field for specifying the programming language of the code snippet,
     # str | None needs Python 3.10 or newer.
-    language: str | None = None
+    language: str | None = Field(default=None, max_length=30)
 
 # Pydantic model defining the exact structure of the response returned by /analyze,
 # (This acts as a strict contract for what the API sends back to the frontend.)
